@@ -1,68 +1,80 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### React-router
+参考地址：https://reactrouter.com/web/guides/quick-start
 
-## Available Scripts
+1.安装
+    cnpm install react-router-dom --save
+    5的版本为了更好的支持hook
 
-In the project directory, you can run:
+2.路由的作用
+    react是单页面应用
 
-### `yarn start`
+3.<BrowserRouter>
+    H5新特性 / history.push 如果上线之后，需要后台做处理：可能会出现重定向404bug
+    示例：http://localhost:3000/mine
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+4.<HashRouter>
+    锚点链接
+    示例：http://localhost:3000/#/mine
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+5.<Link>
+    示例1：<Link to="/mine">Mine页面</Link>
+    示例2：<Link to={{
+                    pathname: "/courses",
+                    search: "?sort=name",
+                    hash: "#the-hash",
+                    state: { fromDashboard: true }   // 隐形传递参数
+                }}
+            />
 
-### `yarn test`
+6.exact属性
+    精准匹配
+    示例：<Route exact path="/" component={ Home }></Route>、
+         <Route exact path="/mine" component={ Mine }></Route>
+         <Route exact path="/mine/ucenter" component={ Ucenter }></Route>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+7.strict属性
+    精准匹配 避免路径后有'/'，例如/mine/，与exact一起使用
+    示例：<Route exact path="/" component={ Home }></Route>、
+         <Route strict exact path="/mine" component={ Mine }></Route>
+         <Route strict exact path="/mine/ucenter" component={ Ucenter }></Route>
 
-### `yarn build`
+8.<Switch>
+    只加载一个路由
+    示例：<Switch>
+          <Route exact path="/" component={ Home }></Route>
+          <Route strict exact path="/mine" component={ Mine }></Route>
+          <Route strict exact path="/mine/ucenter" component={ Ucenter }></Route>
+          <Route component={ NoFound }></Route>
+          </Switch>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+9.render属性
+    示例1：<Route path="/home" render={() => <div>Home</div>} />
+    示例2：<Route path="/home" render={() => <Demo { ...props } name="你好" />} />
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+10.<NavLink>
+    高亮路由标签
+    示例1：<NavLink to="/about">About</NavLink>  在标签上加了class="active"属性，修改.active修改高亮颜色
+    示例2：<NavLink to="/about" activeClassName="selected">About</NavLink> class="selected"
+    示例3：<NavLink to="/about" activeStyle={{ fontWeight: "bold", color: "red"}}>About</NavLink>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+11.路由参数
+    示例1：<Route strict exact path="/mine/ucenter/:id?" component={ Ucenter }></Route> 子组件取值：props.match.prams.id
+    示例2：<Route strict exact path="/mine/ucenter?name=lisa&age=18" component={ Ucenter }></Route> 子组件取值：value = querystring.parse(props.location.search), value.name, value.age
 
-### `yarn eject`
+12.<Redirec>
+    重定向
+    示例：<Redirect to="/"></Redirect>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+13.页面跳转
+    示例1：this.props.history.push('/') 叠加的，上一次的页面依然存在
+    示例2：this.props.history.replace('/') 替换，上一次的页面不存在
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+14.withRouter
+    当组件没有直接被路由管理，获取路由对象
+    import { withRouter } from "react-router-dom"
+    export default withRouter(MyComponent)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+15.<Prompt>
+    在用户准备离开该页面时, 弹出提示
+    import {Prompt } from "react-router-dom";
+    <Prompt message="您确定要离开该页面吗?" when={this.state.isOpen} />
