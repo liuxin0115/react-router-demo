@@ -82,10 +82,12 @@
     * 高亮路由标签
     * 示例：
 ```js
-    <NavLink to="/about">About</NavLink>  // 在标签上加了class="active"属性，修改.active修改高亮颜色
+    // 在标签上加了class="active"属性，修改.active修改高亮颜色
+    <NavLink to="/about">About</NavLink>
 ```
 ```js
-    <NavLink to="/about" activeClassName="selected">About</NavLink> class="selected"
+    // class="selected"
+    <NavLink to="/about" activeClassName="selected">About</NavLink>
 ```
 ```js
     <NavLink to="/about" activeStyle={{ fontWeight: "bold", color: "red"}}>About</NavLink>
@@ -94,10 +96,12 @@
 11. 路由参数
     * 示例：
 ```js
-    <Route strict exact path="/mine/ucenter/:id?" component={ Ucenter }></Route> // 子组件取值：props.match.prams.id
+    // 子组件取值：props.match.prams.id
+    <Route strict exact path="/mine/ucenter/:id?" component={ Ucenter }></Route>
 ```
 ```js
-    <Route strict exact path="/mine/ucenter?name=lisa&age=18" component={ Ucenter }></Route> // 子组件取值：value = querystring.parse(props.location.search), value.name, value.age
+    // 子组件取值：value = querystring.parse(props.location.search), value.name, value.age
+    <Route strict exact path="/mine/ucenter?name=lisa&age=18" component={ Ucenter }></Route>
 ```
 
 12. `<Redirec>`
@@ -110,10 +114,12 @@
 13. 页面跳转
     * 示例：
 ```js
-    this.props.history.push('/')  // 叠加的，上一次的页面依然存在
+    // 叠加的，上一次的页面依然存在
+    this.props.history.push('/')
 ```
 ```js
-    this.props.history.replace('/')  //替换，上一次的页面不存在
+    //替换，上一次的页面不存在
+    this.props.history.replace('/')
 ```
 
 14. withRouter
